@@ -131,4 +131,29 @@ public class UserServiceIMPL implements UserService {
 
     }
 
+    @Override
+    public ResponseEntity<ResponseDto> deleteUser(Long id) {
+        boolean exists = userRepo.existsById(id);
+
+        if (!exists) {
+            ResponseDto errorResponse = ResponseDto.builder()
+                    .data(null)
+                    .message("User not found with ID: " + id)
+                    .statusCode(404)
+                    .build();
+
+            return ResponseEntity.status(404).body(errorResponse);
+        }
+
+        userRepo.deleteById(id);
+
+        ResponseDto successResponse = ResponseDto.builder()
+                .data(null)
+                .message("User deleted successfully")
+                .statusCode(200)
+                .build();
+
+        return ResponseEntity.ok(successResponse);
+    }
+
 }

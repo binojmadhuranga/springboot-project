@@ -13,4 +13,6 @@ public interface UserService {
     public ResponseEntity<ResponseDto> getUserById(Long id);
 
     public ResponseEntity<ResponseDto> getUserByName(String name);
+
+    public ResponseEntity<ResponseDto> deleteUser(Long id);
 }

@@ -28,5 +28,13 @@ public class UserController {
         return userService.saveUser(userDto);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<ResponseDto> getAllUsers()
+    {
+        return userService.getAllUsers();
+    }
+
+
+
 
 }

@@ -4,9 +4,12 @@ import com.acadamy.demo.dto.ResponseDto;
 import com.acadamy.demo.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface UserService {
 
     public ResponseEntity<ResponseDto> saveUser(UserDto userDto);
+    public  ResponseEntity<ResponseDto> getAllUsers();
 
 
 }

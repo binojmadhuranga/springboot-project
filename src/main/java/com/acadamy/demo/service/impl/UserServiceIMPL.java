@@ -11,6 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Slf4j
 @Service
 public class UserServiceIMPL implements UserService {
@@ -40,6 +44,53 @@ public class UserServiceIMPL implements UserService {
                     build(), HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @Override
+    public ResponseEntity<ResponseDto> getAllUsers() {
+        try {
+            List<UserDto> userDtoList = new ArrayList<>();
+            List<User> users = userRepo.findAll();
+
+            if (users.isEmpty()) {
+                return new ResponseEntity<>(
+                        ResponseDto.builder()
+                                .message("No users found")
+                                .data(Collections.emptyList())
+                                .statusCode(HttpStatus.NOT_FOUND.value())
+                                .build(),
+                        HttpStatus.NOT_FOUND
+                );
+            }
+
+            for (User user : users) {
+                UserDto userDto = new UserDto();
+                userDto.setName(user.getName());
+                userDto.setAge(user.getAge());
+                userDtoList.add(userDto);
+            }
+
+            return new ResponseEntity<>(
+                    ResponseDto.builder()
+                            .message("Users fetched successfully")
+                            .data(userDtoList)
+                            .statusCode(HttpStatus.OK.value())
+                            .build(),
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            log.error("Error fetching users", e);
+            return new ResponseEntity<>(
+                    ResponseDto.builder()
+                            .message("Error fetching users")
+                            .data(null)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                            .build(),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
 
 
 }

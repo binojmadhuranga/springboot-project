@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -91,6 +93,26 @@ public class UserServiceIMPL implements UserService {
         }
     }
 
+
+    @Override
+    public ResponseEntity<ResponseDto> getUserById(Long id) {
+        //Optional<User> userOptional = userRepo.findById(id);
+        Optional<User> userOptional = userRepo.findById(id);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return new ResponseEntity<>(ResponseDto.builder().
+                    message("User fetched successfully").
+                    data(user).
+                    build(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ResponseDto.builder().
+                    message("User not found").
+                    data(null).
+                    build(), HttpStatus.NOT_FOUND);
+        }
+
+    }
 
 
 }

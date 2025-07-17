@@ -9,7 +9,8 @@ import java.util.List;
 public interface UserService {
 
     public ResponseEntity<ResponseDto> saveUser(UserDto userDto);
-    public  ResponseEntity<ResponseDto> getAllUsers();
 
+    public ResponseEntity<ResponseDto> getAllUsers();
 
+    public ResponseEntity<ResponseDto> getUserById(Long id);
 }

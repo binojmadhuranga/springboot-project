@@ -114,5 +114,21 @@ public class UserServiceIMPL implements UserService {
 
     }
 
+    @Override
+    public ResponseEntity<ResponseDto> getUserByName(String name) {
+        User user = userRepo.findByName(name);
+        if (user != null) {
+            return new ResponseEntity<>(ResponseDto.builder().
+                    message("User fetched successfully").
+                    data(user).
+                    build(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ResponseDto.builder().
+                    message("User not found").
+                    data(null).
+                    build(), HttpStatus.NOT_FOUND);
+        }
+
+    }
 
 }
